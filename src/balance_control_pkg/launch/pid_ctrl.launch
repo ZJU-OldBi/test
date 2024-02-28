@@ -1,0 +1,59 @@
+<!-- 启动三个pid控制器 -->
+<!-- 
+    坐标定义：角度->前左上(xyz) 角速度->由角度的坐标轴按右手法则确定
+    输出：前进输出量->往x正方向为正值 差动输出量->绕z轴正转为正值 
+    实际输出: 右轮->base_command + diff_command 左轮->base_command - diff_command
+-->
+<launch>
+    <node name="controller" pkg="pid" type="controller" ns="velocity_loop" output="screen" >
+        <param name="node_name" value="velocity_pid" />
+        <param name="Kp" value="0.96" />
+        <param name="Ki" value="0.00" />
+        <param name="Kd" value="0.0" />
+        <param name="upper_limit" value="1" />
+        <param name="lower_limit" value="-1" />
+        <param name="windup_limit" value="100" />
+        <param name="max_loop_frequency" value="300.0" />
+        <param name="min_loop_frequency" value="300.0" />
+
+        <remap from="setpoint" to="/balance/velocity_des" />
+        <remap from="state" to="/balance/velocity" />
+        <remap from="control_effort" to="/balance/pitch_angle_des" />
+    </node>
+
+    <node name="controller" pkg="pid" type="controller" ns="angle_loop" output="screen" >
+        <param name="node_name" value="angle_pid" />
+        <param name="Kp" value="-32.0" />
+        <param name="Ki" value="0.0" />
+        <param name="Kd" value="-10.0" />
+        <param name="upper_limit" value="5" />
+        <param name="lower_limit" value="-5" />
+        <param name="windup_limit" value="100" />
+        <param name="max_loop_frequency" value="300.0" />
+        <param name="min_loop_frequency" value="300.0" />
+
+        <remap from="setpoint" to="/balance/pitch_angle_des" />
+        <remap from="state" to="/balance/pitch_angle" />
+        <remap from="control_effort" to="/balance/base_command" />
+    </node>
+
+    <node name="controller" pkg="pid" type="controller" ns="pusai_loop" output="screen" >
+        <param name="node_name" value="pusai_pid" />
+        <param name="Kp" value="1" />
+        <param name="Ki" value="0.0" />
+        <param name="Kd" value="0.0" />
+        <param name="upper_limit" value="5" />
+        <param name="lower_limit" value="-5" />
+        <param name="windup_limit" value="100" />
+        <param name="max_loop_frequency" value="100.0" />
+        <param name="min_loop_frequency" value="100.0" />
+
+        <remap from="setpoint" to="/balance/yaw_angular_des" />
+        <remap from="state" to="/balance/yaw_angular" />
+        <remap from="control_effort" to="/balance/diff_command" />
+    </node>
+
+    <node name="control_assign_node" pkg="balance_control_pkg" type="control_assign.py" />
+    <!-- 调惨时取消注释 -->
+    <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
+</launch>

@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot
+  name="od_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find od_model)/urdf/od_robot.gazebo" />
+  <xacro:include filename="$(find od_model)/urdf/lidar.xacro" />
+  <xacro:include filename="$(find od_model)/urdf/kinect.xacro" />
+  <xacro:include filename="$(find od_model)/urdf/my_camera.xacro" />
+
+   <xacro:property name="lidar_offset_x" value="0" />
+    <xacro:property name="lidar_offset_y" value="0" />
+    <xacro:property name="lidar_offset_z" value="0.3" />
+
+
+  
+  <link name="base_footprint" />
+
+  <joint name="joint_base_footprint_base_link" type="fixed">
+  <origin
+      xyz="-0.075 0.0 -0.11000000000009"
+      rpy="0 0 3.1415" />
+    <parent link="base_footprint" />
+    <child link="base_link" />
+  </joint>
+  
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="-0.102291357148505 2.16349269496763E-06 0.0712661175454997"
+        rpy="0 0 0" />
+      <mass
+        value="4" />
+      <inertia
+        ixx="0.010105283414695678"
+        ixy="9.661437790384595e-08"
+        ixz="-5.268541302306791e-07"
+        iyy="0.008445352479158024"
+        iyz="4.530186668722743e-07"
+        izz="0.011121247778265564" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.309803921568627 0.309803921568627 0.309803921568627 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link
+    name="link_right_hip">
+    <inertial>
+      <origin
+        xyz="0.00127288188558095 -8.39850139169873E-07 -0.061602697116264"
+        rpy="0 0 0" />
+      <mass
+        value="1" />
+      <inertia
+        ixx="0.0013640629591320569"
+        ixy="-7.585697964322996e-07"
+        ixz="2.3294255372163343e-08"
+        iyy="0.0008042358709478445"
+        iyz="-1.333990158520302e-07"
+        izz="0.0007018232869986387" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/right_first.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/right_first.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_base_right_hip"
+    type="revolute">
+    <origin
+      xyz="-0.134999999999999 0.0850000000000007 0.11000000000009"
+      rpy="-1.57079632679346 0 1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_right_hip" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.524"
+      upper="0.524"
+      effort="100"
+      velocity="35" />
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <link
+    name="link_right_leg1">
+    <inertial>
+      <origin
+        xyz="0.04295 -0.00528 -0.011543"
+        rpy="0 0 0" />
+      <mass
+        value="0.35626" />
+      <inertia
+        ixx="0.00021106"
+        ixy="2.5161E-05"
+        ixz="2.5227E-07"
+        iyy="0.0012432"
+        iyz="1.8112E-08"
+        izz="0.0014238" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/right_second.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.33333 0.33333 0.33333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/right_second.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_right_hip_right_leg1"
+    type="revolute">
+    <origin
+      xyz="0.0885 0 -0.0605000000000007"
+      rpy="1.5707963267949 0.0 1.5707963267949" />
+    <parent
+      link="link_right_hip" />
+    <child
+      link="link_right_leg1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="100"
+      velocity="35" />
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <link
+    name="link_right_leg2">
+    <inertial>
+      <origin
+        xyz="0.18341 0.041752 -0.014254"
+        rpy="0 0 -0.218614" />
+      <mass
+        value="0.2722" />
+      <inertia
+        ixx="0.00017455"
+        ixy="-0.00021635"
+        ixz="6.3806E-08"
+        iyy="0.00069239"
+        iyz="1.3046E-08"
+        izz="0.00083586" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 -0.218614" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/right_third.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 -0.218614" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/right_third.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_right_knee_leg2"
+    type="revolute">
+    <origin
+      xyz="0.299999999999999 0 0.0280000000000001"
+      rpy="0 0 -0.0" />
+    <parent
+      link="link_right_leg1" />
+    <child
+      link="link_right_leg2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.0"
+      upper="0.1"
+      effort="100"
+      velocity="35" />
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <link
+    name="link_right_wheel">
+    <inertial>
+      <origin
+        xyz="-8.7719E-13 2.8688E-12 0.0465"
+        rpy="0 0 0" />
+      <mass
+        value="1" />
+      <inertia
+        ixx="0.0014518643717015625"
+        ixy="-4.6748991066192956e-20"
+        ixz="-2.3373805663826706e-20"
+        iyy="0.0014518643717015625"
+        iyz="-1.6361629471215205e-19"
+        izz="0.002498809975509641" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/right_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.54902 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/right_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_right_leg2_wheel"
+    type="continuous">
+    <origin
+      xyz="0.296 0.0 -0.062"
+      rpy="0 0 3.12459584891114" />
+    <parent
+      link="link_right_leg2" />
+    <child
+      link="link_right_wheel" />
+    <axis
+      xyz="0 0 -1" />
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <link
+    name="link_left_hip">
+    <inertial>
+      <origin
+        xyz="0.00170303205794467 -0.000953174029227427 -0.0623759870405908"
+        rpy="0 0 0" />
+      <mass
+        value="1" />
+      <inertia
+        ixx="0.0013640972352729152"
+        ixy="6.242767419379957e-07"
+        ixz="-4.3156609156948693e-07"
+        iyy="0.0008049114229713263"
+        iyz="1.0545809301350623e-06"
+        izz="0.0007013070774927286" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/left_first.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/left_first.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_base_left_hip"
+    type="revolute">
+    <origin
+      xyz="-0.134999999999659 -0.0850000000000053 0.110000000000092"
+      rpy="1.5707963267949 0 -1.5707963267949" />
+    <parent
+      link="base_link" />
+    <child
+      link="link_left_hip" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-0.524"
+      upper="0.524"
+      effort="100"
+      velocity="35" />
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <link
+    name="link_left_leg1">
+    <inertial>
+      <origin
+        xyz="0.043191 0.0046937 -0.011584"
+        rpy="0 0 0" />
+      <mass
+        value="0.35626" />
+      <inertia
+        ixx="0.00021325"
+        ixy="-3.165E-05"
+        ixz="-7.9605E-08"
+        iyy="0.001241"
+        iyz="2.2921E-08"
+        izz="0.0014238" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/left_second.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.33333 0.33333 0.33333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/left_second.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_left_hip_left_leg1"
+    type="revolute">
+    <origin
+      xyz="0.0884999999999974 0 -0.0604999999996607"
+      rpy="-1.5707963267949 0.0 -1.5707963267949" />
+    <parent
+      link="link_left_hip" />
+    <child
+      link="link_left_leg1" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="100"
+      velocity="35" />
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <link
+    name="link_left_leg2">
+    <inertial>
+      <origin
+        xyz="0.18332 -0.041754 -0.014254"
+        rpy="0 0 0.218614" />
+      <mass
+        value="0.2722" />
+      <inertia
+        ixx="0.00017455"
+        ixy="0.00021635"
+        ixz="-6.3818E-08"
+        iyy="0.00069239"
+        iyz="1.3072E-08"
+        izz="0.00083586" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0.218614" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/left_third.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0.218614" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/left_third.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_left_knee_leg2"
+    type="revolute">
+    <origin
+      xyz="0.3 0 0.0280000000000061"
+      rpy="0 0 0" />
+    <parent
+      link="link_left_leg1" />
+    <child
+      link="link_left_leg2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.0"
+      upper="0.1"
+      effort="100"
+      velocity="35" />
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+  <link
+    name="link_left_wheel">
+    <inertial>
+      <origin
+        xyz="-8.7758E-13 -2.8687E-12 0.0465"
+        rpy="0 0 0" />
+      <mass
+        value="1" />
+      <inertia
+        ixx="0.0014518643717015625"
+        ixy="3.272325894243041e-19"
+        ixz="6.077058397433687e-19"
+        iyy="0.0014518643717015625"
+        iyz="1.4024352385223002e-19"
+        izz="0.002498809975509641" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/left_wheel.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 0.54902 0 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://od_model/meshes/left_wheel.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint_left_leg2_wheel"
+    type="continuous">
+    <origin
+      xyz="0.296 -0.0 -0.062"
+      rpy="0 0 -3.12459584891606" />
+    <parent
+      link="link_left_leg2" />
+    <child
+      link="link_left_wheel" />
+    <axis
+      xyz="0 0 1" />
+    <dynamics damping="0.1" friction="0.0"/>
+  </joint>
+
+  <link name="imu_link"/>
+  <joint name="base_to_imu" type="fixed">
+    <axis rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin rpy="0 0 3.1415" xyz="-0.075 0 0.11"/>
+  </joint>
+
+  <xacro:macro name="transmission_block" params="joint_name">
+    <transmission name="trans1">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${joint_name}">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="motor1">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+
+      <joint name="lidar_joint" type="fixed">
+        <origin xyz="${lidar_offset_x} ${lidar_offset_y} ${lidar_offset_z}" rpy="0 0 0" />
+        <parent link="base_link"/>
+        <child link="laser_link"/>
+    </joint>
+    <xacro:rplidar prefix="laser"/>
+
+  <xacro:transmission_block joint_name="joint_base_right_hip"/>
+  <xacro:transmission_block joint_name="joint_right_hip_right_leg1"/>
+  <xacro:transmission_block joint_name="joint_base_left_hip"/>
+  <xacro:transmission_block joint_name="joint_left_hip_left_leg1"/>
+  <xacro:transmission_block joint_name="joint_right_knee_leg2"/>
+  <xacro:transmission_block joint_name="joint_left_knee_leg2"/>
+  <xacro:transmission_block joint_name="joint_left_leg2_wheel"/>
+  <xacro:transmission_block joint_name="joint_right_leg2_wheel"/>
+</robot>

@@ -1,0 +1,39 @@
+od_robot:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 200  
+  
+  # effort_controllers/JointEffortController---velocity_controllers/JointVelocityController---
+  right_wheel_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_right_leg2_wheel
+
+  left_wheel_effort_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_left_leg2_wheel
+
+  # leg controllers
+  base_right_hip_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_base_right_hip
+  
+  right_hip_right_leg1_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_right_hip_right_leg1
+  
+  base_left_hip_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_base_left_hip
+
+  left_hip_left_leg1_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_left_hip_left_leg1
+
+  right_knee_leg2_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_right_knee_leg2
+
+  left_knee_leg2_controller:
+    type: effort_controllers/JointEffortController
+    joint: joint_left_knee_leg2

@@ -1,0 +1,57 @@
+isSim: true
+gravity: 9.83
+Robot:
+  mass: 10.9
+  wheel_distance: 0.372
+  shoulder_distacne: 0.17
+  wheel_radius: 0.06
+  L1: 0.3
+  L2: 0.3
+  L3: 0.101
+msg_timeout:
+  rc: 1.5
+  imu: 1.5
+  motor: 2.0
+  pos: 3.0
+Control:
+  Pid:
+    velocity:
+      p: 0.18
+      i: 0.014
+      d: 0.0
+      upper_limit: 0.2
+      lower_limit: -0.2
+      windup_limit: 4
+      cutoff_frequency: -1
+    angle:
+      p: -17.0
+      i: 0.0
+      d: 0.0
+      upper_limit: 2.5
+      lower_limit: -2.5
+      windup_limit: 2
+      cutoff_frequency: -1
+    yaw:
+      p: 0.74
+      i: 0.16
+      d: 0.0
+      upper_limit: 1.5
+      lower_limit: -1.5
+      windup_limit: 4
+      cutoff_frequency: -1
+    rate:
+      p: -2.0
+      i: 0.0
+      d: 0.0
+      upper_limit: 0.5
+      lower_limit: -0.5
+      windup_limit: 4
+      cutoff_frequency: -1
+RC_switch:
+  low: 250
+  high: 750
+ctrl_freq_max: 400
+mpc_freq_max: 40
+mpc_horizon: 20
+max_velocity: 0.2
+max_yaw_rate: 0.5

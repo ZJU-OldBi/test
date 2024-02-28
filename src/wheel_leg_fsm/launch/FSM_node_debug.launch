@@ -1,0 +1,14 @@
+<launch>
+	<include file="$(find sbus_serial)/launch/sbus_serial.launch"/>
+	<!-- <include file="$(find fdilink_ahrs)/launch/ahrs_data.launch"/> -->
+	<node pkg="wheel_leg_fsm" type="FSM_node" name="FSM" output="screen">
+		<rosparam command="load" file="$(find wheel_leg_fsm)/config/params.yaml" />
+	</node>
+	
+  	<!-- <node pkg="rosbag" type="play" name="player" args="-l $(find wheel_leg_fsm)/imu.bag"/> -->
+
+	<!-- <param name="robot_description" textfile="$(find od_model)/urdf/od_robot.xacro" />
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    	<remap from="/joint_states" to="/od/joint_states" />
+    </node> -->
+</launch>

@@ -1,0 +1,54 @@
+<!-- 加载机器人关节驱动器，以及观测器脚本 -->
+<launch>
+  <arg name="x" default="0.0" />
+  <arg name="y" default="0.0" />
+  <arg name="z" default="0.38" />
+  <!-- Load the URDF into the ROS Parameter Server -->
+  <param name="robot_description"
+    command="$(find xacro)/xacro --inorder '$(find od_model)/urdf/od_robot.xacro'" />
+  
+  <node
+    name="urdf_spawner"
+    pkg="gazebo_ros"
+    type="spawn_model"
+    respawn="false"
+    args="-urdf -x $(arg x) -y $(arg y) -z $(arg z) -model od_robot -param robot_description
+      -J joint_right_hip_right_leg1 1
+      -J joint_right_knee_leg2 -2
+      -J joint_left_hip_left_leg1 1 
+      -J joint_left_knee_leg2 -2
+    "
+    output="screen" />
+    
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find od_model)/config/od_robot_controller.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/od_robot" 
+    args="
+          joint_state_controller
+          base_right_hip_controller
+          right_hip_right_leg1_controller
+          
+          right_knee_leg2_controller
+          base_left_hip_controller
+          left_hip_left_leg1_controller
+          
+          left_knee_leg2_controller
+          right_wheel_effort_controller
+          left_wheel_effort_controller
+          "/>
+
+  <!-- convert joint states to TF transforms for rviz, etc -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+    respawn="false" output="screen">
+    <remap from="/joint_states" to="/od_robot/joint_states" />
+  </node>
+  
+  <node name="gazebo_can_bridge" pkg="od_model" type="gazebo_can_bridge_node"/>
+
+
+
+
+</launch>

@@ -1,0 +1,41 @@
+!!python/object/new:dynamic_reconfigure.encoding.Config
+dictitems:
+  Q_dx: 8851.0
+  Q_inertial_x: 3300.0
+  Q_inertial_y: 3300.0
+  Q_pitch: 383.9
+  Q_roll: 300.0
+  Q_xv: 385.0
+  Q_y: 3000.0
+  Q_yaw: 999.9
+  Q_z: 200.0
+  R_N: 0.5
+  R_P: 0.01
+  R_Q: 0.3
+  R_tao: 0.6
+  groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+    dictitems:
+      Q_dx: 8851.0
+      Q_inertial_x: 3300.0
+      Q_inertial_y: 3300.0
+      Q_pitch: 383.9
+      Q_roll: 300.0
+      Q_xv: 385.0
+      Q_y: 3000.0
+      Q_yaw: 999.9
+      Q_z: 200.0
+      R_N: 0.5
+      R_P: 0.01
+      R_Q: 0.3
+      R_tao: 0.6
+      groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+        state: []
+      id: 0
+      name: Default
+      parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
+        state: []
+      parent: 0
+      state: true
+      type: ''
+    state: []
+state: []

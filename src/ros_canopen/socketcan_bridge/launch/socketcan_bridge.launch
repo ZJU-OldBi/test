@@ -1,0 +1,12 @@
+<launch>
+        <node pkg="socketcan_bridge" type="socketcan_bridge_node" name="right_socketcan_bridge" output="screen">
+                <param name="can_device" value="can0" />
+                <remap from="/sent_messages" to="right_can_cmd" />
+                <remap from="/received_messages" to="right_can_msg" />
+        </node>
+        <node pkg="socketcan_bridge" type="socketcan_bridge_node" name="left_socketcan_bridge" output="screen">
+                <param name="can_device" value="can1" />
+                <remap from="/sent_messages" to="left_can_cmd" />
+                <remap from="/received_messages" to="left_can_msg" />	
+        </node>
+</launch>

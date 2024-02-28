@@ -1,0 +1,7 @@
+<launch>
+	<include file="$(find sbus_serial)/launch/sbus_serial.launch"/>
+	<include file="$(find fdilink_ahrs)/launch/ahrs_data.launch"/>
+	<node pkg="wheel_leg_fsm" type="FSM_node" name="FSM" output="screen">
+		<rosparam command="load" file="$(find wheel_leg_fsm)/config/params.yaml" />
+	</node>
+</launch>
